@@ -1,12 +1,37 @@
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-        {% endfor %}
-    </fieldset>
-    <input type="submit" value="Vote">
-    </form>
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<div class="super-container">
+
+    <div class="overlay"></div>
+
+    <div class="wrap">
+        <div class="form-wrap">
+            <div class="form-intro">
+                <h2>satisfaction survey</h2>
+                <p>Help us to improve our service and customer satisfaction.</p>
+            </div>
+            
+            <div class="form-box">
+                <div class="inner">
+                    <form action="{% url 'polls:vote' question.id %}" method="post">
+                        {% csrf_token %}
+                        <fieldset>
+                            <legend><h3>Please rate your overall satisfaction about the service provided.</h3></legend>
+                            {% if error_message %}<p class="error-msg"><strong>{{ error_message }}</strong></p>{% endif %}
+                            {% for choice in question.choice_set.all %}
+                            <div class="radio-wrap">
+                                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                            </div>
+                            {% endfor %}
+                        </fieldset>
+                        <input type="submit" value="Vote" class="vote-btn">
+                        </form>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+      
+</div>
